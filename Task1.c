@@ -1,4 +1,6 @@
-#include <main.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <string.h>
 
 /**
  * _putchar - writes the character c to stdout
@@ -64,7 +66,8 @@ int _printf(const char *format, ...)
 				count++;
 				break;
 			case 's':
-				count += write(1, va_arg(args, char *), strlen(va_arg(args, char *)));
+				count += write(1, va_arg(args, char *), strlen(va_arg(args,
+char *)));
 				break;
 			case '%':
 				write(1, "%", 1);
