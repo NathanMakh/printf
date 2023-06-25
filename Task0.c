@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "main.h"
+#include <stdio.h>
 
 /**
  * _printf - produces output according to a format
