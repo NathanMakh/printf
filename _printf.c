@@ -106,13 +106,7 @@ int _printf(const char *format, ...)
 			else if (*ptr == 's')
 			{
 				char *str = va_arg(args, char *);
-
-				while (*str)
-				{
-					_putchar(*str);
-					count++;
-					str++;
-				}
+				count += _putstr(str);
 			}
 			else if (*ptr == 'd' || *ptr == 'i')
 			{
