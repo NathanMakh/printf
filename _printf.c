@@ -146,11 +146,6 @@ int _printf(const char *format, ...)
 				unsigned int num = va_arg(args, unsigned int);
 				count += _putnum(num, 16);
 			}
-			else if (*ptr == 'b')
-			{
-				unsigned int num = va_arg(args, unsigned int);
-				count += _putnum(num, 2);
-			}
 			else if (*ptr == 'S')
 			{
 				char *str = va_arg(args, char *);
