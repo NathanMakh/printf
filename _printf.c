@@ -14,6 +14,25 @@ int _putchar(char c)
 }
 
 /**
+ * _putstr - Writes a string to stdout.
+ * @str: The string to be written.
+ *
+ * Return: The number of characters written.
+ */
+
+int _putstr(const char *str)
+{
+	int count = 0;
+	while (*str)
+	{
+		_putchar(*str);
+		count++;
+		str++;
+	}
+	return (count);
+}
+
+/**
  * _putnum - Prints a number to stdout.
  * @num: The number to be printed.
  * @base: The base for conversion (e.g., 10 for decimal, 2 for binary)
@@ -24,12 +43,25 @@ int _putnum(unsigned int num, unsigned int base)
 {
 	static const char *digits = "0123456789ABCDEF";
 	int count = 0;
+	char buffer[1024];
 
-	if (num / base)
-		count += _putnum(num / base, base);
+	if (num == 0)
+	{
+		_putchar('0');
+		count++;
+		return (count);
+	}
 
-	_putchar(digits[num % base]);
-	count++;
+	int i = sizeof(buffer) - 1;
+	buffer[i] = '\0';
+
+	while (num)
+	{
+		buffer[--i] = digits[num % base];
+		num /= base;
+	}
+
+	count = _putstr(&buffer[i]);
 
 	return (count);
 }
