@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 
+int _putnum(unsigned int num, unsigned int base);
 int _printf(const char *format, ...);
 int _putchar(char c);
-void print_number(int n);
+int _putnum(int num)
 
 #endif

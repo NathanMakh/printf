@@ -1,13 +1,10 @@
 #include <stdarg.h>
 #include <unistd.h>
-#include <string.h>
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * _putchar - Writes a character to stdout.
+ * @c: The character to be written.
+ * Return: On success, 1. On error, -1 is returned.
  */
 
 int _putchar(char c)
@@ -16,77 +13,95 @@ int _putchar(char c)
 }
 
 /**
- * print_number - prints an integer
- * @n: integer to be printed
- *
- * Return: void
+ * _putnum - Prints a number to stdout
+ * @num: The number to be printed.
+ * @base: The base for conversion (e.g., 10 for decimal, 2 for binary)
+ * Return: The number of characters printed
  */
 
-void print_number(int n)
+int _putnum(unsigned int num, unsigned int base)
 {
-	unsigned int num;
+	static const char *digits = "0123456789ABCDEF";
+	int count = 0;
 
-	if (n < 0)
-	{
-		_putchar('-');
-		num = -n;
-	}
-	else
-	{
-		num = n;
-	}
-	if (num / 10 != 0)
-		print_number(num / 10);
-	_putchar((num % 10) + '0');
+	if (num / base)
+		count += _putnum(num / base, base);
+
+	_putchar(digits[num % base]);
+	count++;
+
+	return (count);
 }
 
 /**
- * _printf - produces output according to a format
- * @format: character string composed of zero or more directives
- * Return: the number of characters printed
+ * _printf - Prints output according to a format.
+ * @format: A character string containing zero or more directives.
+ * Return: The number of characters printed
  */
 
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	char c;
+	const char *ptr;
 
 	va_start(args, format);
-	while (*format)
+
+	for (ptr = format; *ptr != '\0'; ptr++)
 	{
-		if (*format == '%')
+		if (*ptr != '%')
 		{
-			format++;
-			switch (*format)
-			{
-			case 'c':
-				c = (char)va_arg(args, int);
-				write(1, &c, 1);
-				count++;
-				break;
-			case 's':
-				count += write(1, va_arg(args, char *), strlen(va_arg(args, char *)));
-				break;
-			case '%':
-				write(1, "%", 1);
-				count++;
-				break;
-			case 'd':
-			case 'i':
-				print_number(va_arg(args, int));
-				break;
-			default:
-				break;
-			}
+			_putchar(*ptr);
+			count++;
 		}
 		else
 		{
-			write(1, format, 1);
-			count++;
+			ptr++;
+			if (*ptr == '%')
+			{
+				_putchar(*ptr);
+				count++;
+			}
+			else if (*ptr == 'c')
+			{
+				char c = (char)va_arg(args, int);
+
+				_putchar(c);
+				count++;
+			}
+			else if (*ptr == 's')
+			{
+				char *str = va_arg(args, char *);
+
+				while (*str)
+				{
+					_putchar(*str);
+					count++;
+					str++;
+				}
+			}
+			else if (*ptr == 'd' || *ptr == 'i')
+			{
+				int num = va_arg(args, int);
+
+				if (num < 0)
+				{
+					_putchar('-');
+					count++;
+					num *= -1;
+				}
+				count += _putnum(num, 10);
+			}
+			else if (*ptr == 'b')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+
+				count += _putnum(num, 2);
+			}
 		}
-		format++;
 	}
+
 	va_end(args);
+
 	return (count);
 }
