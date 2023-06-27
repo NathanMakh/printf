@@ -1,6 +1,5 @@
 #include <stdarg.h>
 #include <unistd.h>
-#include <stdio.h>
 #include "main.h"
 
 /**
@@ -93,6 +92,26 @@ int _printf(const char *format, ...)
 					num *= -1;
 				}
 				count += _putnum(num, 10);
+			}
+			else if (*ptr == 'u')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+				count += _putnum(num, 10);
+			}
+			else if (*ptr == 'o')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+				count += _putnum(num, 8);
+			}
+			else if (*ptr == 'x')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+				count += _putnum(num, 16);
+			}
+			else if (*ptr == 'X')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+				count += _putnum(num, 16);
 			}
 			else if (*ptr == 'b')
 			{
