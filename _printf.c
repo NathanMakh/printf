@@ -97,6 +97,11 @@ int _printf(const char *format, ...)
 				_putchar(*ptr);
 				count++;
 			}
+			else if (*ptr == 'b')
+			{
+				unsigned int num = va_arg(args, unsigned int);
+				count += _putnum(num, 2);
+			}
 			else if (*ptr == 'c')
 			{
 				char c = (char)va_arg(args, int);
