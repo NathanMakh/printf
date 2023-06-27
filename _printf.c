@@ -45,6 +45,7 @@ int _putnum(unsigned int num, unsigned int base)
 	static const char *digits = "0123456789ABCDEF";
 	int count = 0;
 	char buffer[1024];
+	int i;
 
 	if (num == 0)
 	{
@@ -53,7 +54,7 @@ int _putnum(unsigned int num, unsigned int base)
 		return (count);
 	}
 
-	int i = sizeof(buffer) - 1;
+	i = sizeof(buffer) - 1;
 	buffer[i] = '\0';
 
 	while (num)
@@ -111,7 +112,6 @@ int _printf(const char *format, ...)
 			else if (*ptr == 'd' || *ptr == 'i')
 			{
 				int num = va_arg(args, int);
-
 				if (num < 0)
 				{
 					_putchar('-');
