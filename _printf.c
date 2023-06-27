@@ -151,6 +151,26 @@ int _printf(const char *format, ...)
 				unsigned int num = va_arg(args, unsigned int);
 				count += _putnum(num, 2);
 			}
+			else if (*ptr == 'S')
+			{
+				char *str = va_arg(args, char *);
+				while (*str)
+				{
+					if (*str < 32 || *str >= 127)
+					{
+						_putchar('\\');
+						_putchar('x');
+						count += 2;
+						count += _putnum(*str, 16);
+					}
+					else
+					{
+						_putchar(*str);
+						count++;
+					}
+					str++;
+				}
+			}
 		}
 	}
 
